@@ -1,6 +1,6 @@
-Clinical Trial Monte Carlo Model
+# **Clinical Trial Monte Carlo Model**
 
-This project is a computational framework designed to model the biological variance, regulatory hurdles, and financial risks of bringing a new pharmaceutical drug to market.
+#### This project is a computational framework designed to model the biological variance, regulatory hurdles, and financial risks of bringing a new pharmaceutical drug to market.
 
 The core of the model tracks the phase progression of a clinical trial, simulating monthly patient enrollment and their response to a new, candidate drug for which the user will provide the preclinical efficacy results. 
 To account for the fact that the preclinical efficacy rarely translates to human patients, the model applies a preclinical-to-clinical translation factor to the user’s initial input before calculating cohort responses for phase 3. These factors are highly optimistic compared to historical broad-spectrum averages, assuming that the simulated candidates utilize modern, highly targeted precision medicine.
@@ -18,23 +18,25 @@ By separating clinical risk from financial risk, the model delivers a verdict on
 
 The drug profiles from the simulator use parameters calibrated to reflect real-world clinical success rates, trial costs, and regulatory hurdles. The baseline probabilities and trial costs were derived from the BIO Clinical Development Success Rates 2011-2020 Report and papers such as “Estimation of clinical trial success rates and related parameters" (Wong, Siah, & Lo, 2019. Published in Biostatistics).
 
-1. Oncology
-- Clinical Characteristics: High biological complexity, severe patient morbidity, and tumor heterogeneity (mutation/resistance).
-- Trial Economics: Highest monthly burn rate ($3.0M) due to expensive clinical sites, complex dosing regimens, and high-frequency imaging/biopsies required for FDA endpoints.
-- Phase 2 & PTRS: Tumors frequently build resistance, resulting in a brutally low Phase 2 success rate (25%). Consequently, the end-to-end Minimum Acceptable PTRS is only 5%. An oncology drug that survives Phase 2 is highly valuable, balancing the extreme early-stage failure rates. 
-- The lowest clinical translation factor (70%)
-- Regulatory Margin: Standard of Care (SoC) is generally low (30%), requiring a standard 5% superiority margin to prove statistical significance.
+## **1. Oncology**
+  - Clinical Characteristics: High biological complexity, severe patient morbidity, and tumor heterogeneity (mutation/resistance).
+  - Trial Economics: Highest monthly burn rate ($3.0M) due to expensive clinical sites, complex dosing regimens, and high-frequency imaging/biopsies required for FDA endpoints.
+  - Phase 2 & PTRS: Tumors frequently build resistance, resulting in a brutally low Phase 2 success rate (25%). Consequently, the end-to-end Minimum Acceptable PTRS is only 5%. An oncology drug that survives Phase 2 is highly valuable, balancing the extreme early-stage failure rates. 
+  - The lowest clinical translation factor (70%)
+  - Regulatory Margin: Standard of Care (SoC) is generally low (30%), requiring a standard 5% superiority margin to prove statistical significance.
 
-2. Immunology
-- Clinical Characteristics: Moderate biological complexity, targeting specific inflammatory or autoimmune pathways.
-- Trial Economics: Moderate monthly burn rate ($1.5M) reflecting outpatient monitoring and standard biomarker assays.
-- Phase 2 & PTRS: Better understood mechanistic pathways lead to a higher Phase 2 survival rate (45%) compared to oncology. The minimum acceptable end-to-end PTRS is 10%. 
-- High clinical translation factor (80%)
-- Regulatory Margin: The market is generally crowded with highly effective existing treatments, setting a steep Standard of Care baseline (50%). A new candidate must still clear a standard 5% superiority margin over this already-high bar.
+## **2. Immunology**
+  - Clinical Characteristics: Moderate biological complexity, targeting specific inflammatory or autoimmune pathways.
+  - Trial Economics: Moderate monthly burn rate ($1.5M) reflecting outpatient monitoring and standard biomarker assays.
+  - Phase 2 & PTRS: Better understood mechanistic pathways lead to a higher Phase 2 survival rate (45%) compared to oncology. The minimum acceptable end-to-end PTRS is 10%. 
+  - High clinical translation factor (80%)
+  - Regulatory Margin: The market is generally crowded with highly effective existing treatments, setting a steep Standard of Care baseline (50%). A new candidate must still clear a standard 5% superiority margin over this already-high bar.
 
-3. Rare Diseases
-- Clinical Characteristics: Highly targeted, usually monogenic conditions with extremely small patient populations and severe unmet medical needs.
-- Trial Economics: Lower monthly clinical burn rate ($1.0M) because there are fewer patients to actively monitor, though recruitment is notoriously slow
-- Phase 2 & PTRS: Because the exact molecular cause of the disease is usually known, Phase 2 efficacy success is high (55%). A venture capital or pharmaceutical firm will demand a higher end-to-end PTRS (15%) to justify funding. 
-- Extremely high translation factor (90%)
-- Regulatory Margin: Many rare diseases have no existing treatments, establishing a low Standard of Care (15%). However, because patient cohorts are so small, a larger statistical margin (+10%) is required to compensate for the trial's inherently low statistical power.
+## **3. Rare Diseases**
+  - Clinical Characteristics: Highly targeted, usually monogenic conditions with extremely small patient populations and severe unmet medical needs.
+  - Trial Economics: Lower monthly clinical burn rate ($1.0M) because there are fewer patients to actively monitor, though recruitment is notoriously slow
+  - Phase 2 & PTRS: Because the exact molecular cause of the disease is usually known, Phase 2 efficacy success is high (55%). A venture capital or pharmaceutical firm will demand a higher end-to-end PTRS (15%) to justify funding. 
+  - Extremely high translation factor (90%)
+  - Regulatory Margin: Many rare diseases have no existing treatments, establishing a low Standard of Care (15%). However, because patient cohorts are so small, a larger statistical margin (+10%) is required to compensate for the trial's inherently low statistical power.
+
+[Check out my LinkedIn profile](www.linkedin.com/in/maria-săvoaia-846132336)
