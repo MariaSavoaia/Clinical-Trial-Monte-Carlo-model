@@ -2,21 +2,23 @@
 
 #### This project is a computational framework designed to model the biological variance, regulatory hurdles, and financial risks of bringing a new pharmaceutical drug to market.
 
-The core of the model tracks the phase progression of a clinical trial, simulating monthly patient enrollment and their response to a new, candidate drug for which the user will provide the preclinical efficacy results. 
-To account for the fact that the preclinical efficacy rarely translates to human patients, the model applies a preclinical-to-clinical translation factor to the user’s initial input before calculating cohort responses for phase 3. These factors are highly optimistic compared to historical broad-spectrum averages, assuming that the simulated candidates utilize modern, highly targeted precision medicine.
+  The core of the model tracks the phase progression of a clinical trial, simulating monthly patient enrollment and their response to a new, candidate drug for which the user will provide the preclinical efficacy results. 
+  To account for the fact that the preclinical efficacy rarely translates to human patients, the model applies a preclinical-to-clinical translation factor to the user’s initial input before calculating cohort responses for phase 3. These factors are highly optimistic compared to historical broad-spectrum averages, assuming that the simulated candidates utilize modern, highly targeted precision medicine.
 
-Early phases (1 and 2) test for basic safety and efficacy. These phases have more predictable costs and duration, because they require smaller patient cohorts, which makes them less susceptible to massive variations. 
-Phase 3, however, is usually the bottleneck of clinical research, because it requires bigger cohorts (1000 patients in our model), causing large variations in both cost and time-to-market. During this phase, the candidate drug’s performance is compared against the current Standard of Care, while also introducing unpredictable, real world FDA regulatory events such as safety signals that halt trials or fast-track designations that accelerate enrollment.
+  Early phases (1 and 2) test for basic safety and efficacy. These phases have more predictable costs and duration, because they require smaller patient cohorts, which makes them less susceptible to massive variations. 
+  Phase 3, however, is usually the bottleneck of clinical research, because it requires bigger cohorts (1000 patients in our model), causing large variations in both cost and time-to-market. During this phase, the candidate drug’s performance is compared against the current Standard of Care, while also introducing unpredictable, real world FDA regulatory events such as safety signals that halt trials or fast-track designations that accelerate enrollment.
 
-To evaluate whether the candidate drug is worth the financial investment, the simulator calculates the risk-adjusted Net Present Value, using a lognormal distribution to model the variations in peak market sales (including the upside potential of ‘blockbuster’ drugs to generate huge revenues), adjusted to the drug’s simulated clinical performance and also taking into account the R&D costs.
+  To evaluate whether the candidate drug is worth the financial investment, the simulator calculates the risk-adjusted Net Present Value, using a lognormal distribution to model the variations in peak market sales (including the upside potential of ‘blockbuster’ drugs to generate huge revenues), adjusted to the drug’s simulated clinical performance and also taking into account the R&D costs.
 
-The Monte Carlo simulation uses dynamic FDA approval thresholds that adapt to 3 different drug categories, requiring the new drug to demonstrate a statistically meaningful superior effect compared to the current SoC (for example, therapies for rare diseases require a much larger statistical margin of superiority because they typically rely on smaller patient cohorts, which results in lower statistical power).
-The model also performs efficacy sweeping, running thousands of simulations across various arbitrary efficacy levels and calculating their corresponding mean NPVs, generating a baseline viability curve.
+  The Monte Carlo simulation uses dynamic FDA approval thresholds that adapt to 3 different drug categories, requiring the new drug to demonstrate a statistically meaningful superior effect compared to the current SoC (for example, therapies for rare diseases require a much larger statistical margin of superiority because they typically rely on smaller patient cohorts, which results in lower statistical power).
+  The model also performs efficacy sweeping, running thousands of simulations across various arbitrary efficacy levels and calculating their corresponding mean NPVs, generating a baseline viability curve.
 
-The candidate’s clinical viability is analyzed by benchmarking its simulated performance against the minimum acceptable Probability of Technical and Regulatory Success (PTRS) from Phase 1 to Market, specific to its drug category. 
-By separating clinical risk from financial risk, the model delivers a verdict on whether the candidate should proceed to clinical phases or not. 
+  The candidate’s clinical viability is analyzed by benchmarking its simulated performance against the minimum acceptable Probability of Technical and Regulatory Success (PTRS) from Phase 1 to Market, specific to its drug category. 
 
-The drug profiles from the simulator use parameters calibrated to reflect real-world clinical success rates, trial costs, and regulatory hurdles. The baseline probabilities and trial costs were derived from the BIO Clinical Development Success Rates 2011-2020 Report and papers such as “Estimation of clinical trial success rates and related parameters" (Wong, Siah, & Lo, 2019. Published in Biostatistics).
+  By separating clinical risk from financial risk, the model delivers a verdict on whether the candidate should proceed to clinical phases or not. 
+
+  
+  The drug profiles from the simulator use parameters calibrated to reflect real-world clinical success rates, trial costs, and regulatory hurdles. The baseline probabilities and trial costs were derived from the BIO Clinical Development Success Rates 2011-2020 Report and papers such as “Estimation of clinical trial success rates and related parameters" (Wong, Siah, & Lo, 2019. Published in Biostatistics).
 
 ## **1. Oncology**
   - Clinical Characteristics: High biological complexity, severe patient morbidity, and tumor heterogeneity (mutation/resistance).
@@ -39,4 +41,4 @@ The drug profiles from the simulator use parameters calibrated to reflect real-w
   - Extremely high translation factor (90%)
   - Regulatory Margin: Many rare diseases have no existing treatments, establishing a low Standard of Care (15%). However, because patient cohorts are so small, a larger statistical margin (+10%) is required to compensate for the trial's inherently low statistical power.
 
-[Check out my LinkedIn profile](www.linkedin.com/in/maria-săvoaia-846132336)
+[Check out my LinkedIn profile](https://www.linkedin.com/in/maria-săvoaia-846132336)
