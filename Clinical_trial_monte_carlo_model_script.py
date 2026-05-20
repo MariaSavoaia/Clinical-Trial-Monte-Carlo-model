@@ -165,17 +165,15 @@ for _ in range(USER_RUNS):
                    ('user', user_clinical_eff, approved, months, successes/1000, npv))
 
 conn.commit()
-print("\nSimulation complete. Data committed to SQLite.")
 
 #Analytics
 df = pd.read_sql_query("SELECT * FROM trial_runs", conn)
 user_df = df[df['run_type'] == 'user']
 sweep_df = df[df['run_type'] == 'sweep']
 
-print("Raw data preview (candidate's first 10 simulations)")
+print("\nRaw data preview (candidate's first 10 simulations)")
 pd.set_option('display.expand_frame_repr', False)
 print(user_df.head(10))
-print("\n\n")
 
 user_approvals = user_df[user_df['is_approved'] == True]
 user_failures = user_df[user_df['is_approved'] == False]
@@ -186,7 +184,7 @@ user_avg_npv = user_df['npv'].mean()
 p12_survival_rate = (profile["p1_prob"] * profile["p2_prob"]) * 100
 
 
-print("User's candidate assessment")
+print("\nUser's candidate assessment")
 print(f"User's Preclinical Efficacy: {user_preclinical_eff * 100:.1f}%")
 print(f"Estimated Clinical Efficacy: {user_clinical_eff * 100:.1f}%, adjusted using a 'clinical translation' factor of {profile['translation']:.2f}")
 
@@ -217,14 +215,15 @@ if num_failed > 0:
     
     print(f"\nAverage NPV (Failed): -${abs(avg_npv_failed)/1e6:,.1f}M")
     print(f"Failure by phase: \n{p1_fails} failed Phase 1 \n{p2_fails} failed Phase 2 \n{p3_fails} failed Phase 3")
-print("\n\n")
+
 
 viability_curve = sweep_df.groupby('target_efficacy')['npv'].mean()
-print("Efficacy sweep viability curve")
+print("\nEfficacy sweep viability curve")
 for efficacy, avg_npv in viability_curve.items():
     status = "profitable" if avg_npv > 0 else "not profitable"
     print(f"For {efficacy*100:.0f}% efficacy the average NPV is ${avg_npv:,.2f} ({status})")
-print("\n\n")
+
+print("\n")
 
 """Analyzing our candidate's clinical trial viability by benchmarking its simulated performance 
 against the minimum acceptable success rate (Phase 1 to Market) for its specific drug category."""
