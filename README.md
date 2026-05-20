@@ -10,12 +10,11 @@
 
   The Monte Carlo simulation uses dynamic FDA approval thresholds that adapt to 3 different drug categories, requiring the new drug to demonstrate a statistically meaningful superior effect compared to the current SoC (for example, therapies for rare diseases require a much larger statistical margin of superiority because they typically rely on smaller patient cohorts, which results in lower statistical power).
   The model also performs efficacy sweeping, running thousands of simulations across various arbitrary efficacy levels and calculating their corresponding mean NPVs, generating a baseline viability curve.
-  The simulation results are stored in a SQLite3 database and then analyzed.
 
   To evaluate whether the candidate drug is worth the financial investment, the simulator calculates the risk-adjusted Net Present Value, using a lognormal distribution to model the variations in peak market sales (including the upside potential of ‘blockbuster’ drugs to generate huge revenues), adjusted to the drug’s simulated clinical performance and also taking into account the R&D costs.
-
   The candidate’s clinical viability is analyzed by benchmarking its simulated performance against the minimum acceptable Probability of Technical and Regulatory Success (PTRS) from Phase 1 to Market, specific to its drug category. 
-
+  
+  The simulation results are stored in a SQLite3 database and then analyzed.
   By separating clinical risk from financial risk, the model delivers a verdict on whether the candidate should proceed to clinical phases or not. 
 
   
