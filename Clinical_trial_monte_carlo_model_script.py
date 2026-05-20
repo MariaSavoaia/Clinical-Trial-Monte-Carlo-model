@@ -177,25 +177,27 @@ pd.set_option('display.expand_frame_repr', False)
 print(user_df.head(10))
 print("\n\n")
 
-user_success_rate = (user_df['is_approved'].sum() / USER_RUNS) * 100
+user_approvals = user_df[user_df['is_approved'] == True]
+user_failures = user_df[user_df['is_approved'] == False]
+num_approved = len(user_approvals)
+num_failed = len(user_failures)
+user_success_rate = (num_approved / USER_RUNS) * 100
 user_avg_npv = user_df['npv'].mean()
 p12_survival_rate = (profile["p1_prob"] * profile["p2_prob"]) * 100
-num_approved = len(user_df[user_df['is_approved'] == 1])
-num_failed = len(user_df[user_df['is_approved'] == 0])
+
 
 print("User's candidate assessment")
 print(f"User's Preclinical Efficacy: {user_preclinical_eff * 100:.1f}%")
 print(f"Estimated Clinical Efficacy: {user_clinical_eff * 100:.1f}%, adjusted using a 'clinical translation' factor of {profile['translation']:.2f}")
 
-print(f"User's total approvals: {num_approved}")
-print(f"User's total failures: {num_failed}")
-
 print(f"\nProjected Phase 1 & 2 Survival: {p12_survival_rate:.1f}%")
 print(f"Projected End-to-End Clinical Success Rate: {user_success_rate:.2f}%")
 print(f"Expected NPV: ${user_avg_npv:,.2f}")
 
+print(f"\nUser's total approvals: {num_approved}")
+print(f"User's total failures: {num_failed}")
+
 if num_approved > 0:
-    user_approvals = user_df[user_df['is_approved'] == 1]
     avg_npv_approved = user_approvals['npv'].mean()
     avg_time_approved = user_approvals['timeline_months'].mean()
     best_run = user_approvals.loc[user_approvals['npv'].idxmax()]
@@ -207,9 +209,7 @@ if num_approved > 0:
     print(f"Efficacy Rate: {best_run['efficacy_rate']*100:.1f}%")
 
 if num_failed > 0:
-    user_failures = user_df[user_df['is_approved'] == 0]
     avg_npv_failed = user_failures['npv'].mean()
-    
     # Calculating Failure by Phase based on timeline milestones
     p1_fails = len(user_failures[user_failures['timeline_months'] == 6])
     p2_fails = len(user_failures[user_failures['timeline_months'] == 24])
@@ -239,19 +239,11 @@ else:
 print("\n\n")
 
 #Visualization
-df = pd.read_sql_query("SELECT * FROM trial_runs", conn)
-sweep_df = df[df['run_type'] == 'sweep']
-user_df = df[df['run_type'] == 'user']
-
-user_approvals = user_df[user_df['is_approved'] == True]
-user_failures = user_df[user_df['is_approved'] == False]
-
 plt.figure(figsize=(18, 10))
 
-#1. The Viability Curve (Candidate vs sweep)
+#1. The Viability Curve (Candidate's clinical efficacy vs sweep)
 plt.subplot(2, 3, 1)
 sweep_curve = sweep_df.groupby('target_efficacy')['npv'].mean().reset_index()
-user_avg_npv = user_df['npv'].mean()
 user_eff = user_df['target_efficacy'].iloc[0]
 
 plt.plot(sweep_curve['target_efficacy'] * 100, sweep_curve['npv'] / 1e6, 
@@ -296,13 +288,9 @@ plt.ylabel("Frequency", fontsize=12)
 
 #6. Clinical phase failures
 plt.subplot(2, 3, 6)
-p1_fails = len(user_df[(user_df['is_approved'] == False) & (user_df['timeline_months'] <= 6)])
-p2_fails = len(user_df[(user_df['is_approved'] == False) & (user_df['timeline_months'] > 6) & (user_df['timeline_months'] <= 24)])
-p3_fails = len(user_df[(user_df['is_approved'] == False) & (user_df['timeline_months'] > 24)])
-approved_count = len(user_df[user_df['is_approved'] == True])
 
 stages = ['Phase I Fail\n(-$5M)', 'Phase II Fail\n(-$25M)', 'Phase III Fail\n(Biggest losses)', 'Approved\n(Market)']
-counts = [p1_fails, p2_fails, p3_fails, approved_count]
+counts = [p1_fails, p2_fails, p3_fails, num_approved]
 colors = ['#FFF9D2', '#FFD1B7', '#ffb3ba', '#BCEAD5']
 
 plt.bar(stages, counts, color=colors)
